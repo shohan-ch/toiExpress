@@ -2,22 +2,31 @@ import express, { Application, Request, Response } from "express";
 import "reflect-metadata";
 import { createExpressServer } from "routing-controllers";
 import { UserController } from "./app/Controllers/UserController";
+import AppDataSource from "./config/Database";
 
 class Server {
   private app: any;
-  private port;
+  private port = 3000;
   constructor() {
+    this.dbConnect();
     this.app = createExpressServer({
       routePrefix: "/api/v1",
       controllers: [UserController],
     });
-    this.port = 3000;
   }
 
   startServer() {
     this.app.listen(this.port, () => {
       console.log("Server listen at port " + this.port);
     });
+  }
+
+  dbConnect() {
+    AppDataSource.initialize()
+      .then(() => {
+        console.log("Database connected");
+      })
+      .catch((err) => console.log(err));
   }
 }
 
