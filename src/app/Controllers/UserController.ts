@@ -11,14 +11,15 @@ import {
 } from "routing-controllers";
 import UserRepository from "../Repositories/UserRepository";
 import { Request } from "express";
+import JsonReponse from "../../lib/JsonReponse";
 
 @JsonController("/users")
 // @Controller()
 export class UserController {
   @Post()
-  store(@Body({ required: true }) user: any) {
-    let response = UserRepository.store(user);
-    return response;
+  async store(@Body({ required: true }) user: any) {
+    let response = await UserRepository.store(user);
+    return JsonReponse.success(response);
   }
 
   @Get()
