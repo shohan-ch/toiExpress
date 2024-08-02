@@ -3,6 +3,8 @@ import "reflect-metadata";
 import { createExpressServer } from "routing-controllers";
 import { UserController } from "./app/Controllers/UserController";
 import AppDataSource from "./config/Database";
+import ErrorHandleMiddleware from "./middlewares/ErrorHandleMiddleware";
+import { JsonResponseMiddleware } from "./middlewares/JsonResponseMiddleware";
 
 class Server {
   private app: any;
@@ -12,7 +14,10 @@ class Server {
     this.app = createExpressServer({
       routePrefix: "/api/v1",
       controllers: [UserController],
+      middlewares: [JsonResponseMiddleware],
+      defaultErrorHandler: false,
     });
+    this.app.use(ErrorHandleMiddleware);
   }
 
   startServer() {
@@ -32,18 +37,3 @@ class Server {
 
 const server = new Server();
 server.startServer();
-
-// let app = express();
-
-// app.get("/", (req: Request, res: Response) => {
-//   res.send("Welcome Page");
-// });
-
-// app.listen(4000, () => {
-//   console.log("running at port 4000");
-// });
-
-// const app = createExpressServer({
-//   controllers: [UserController],
-// });
-// app.listen(3000);
