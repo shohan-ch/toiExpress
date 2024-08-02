@@ -1,6 +1,9 @@
 import { Request } from "express";
 
 class UserRepository {
+  store(user: any) {
+    return "New User";
+  }
   getUsers() {
     return "All User form repository";
   }

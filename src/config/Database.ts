@@ -1,4 +1,6 @@
 import { DataSource } from "typeorm";
+import { ToiletFeedback } from "../models/ToiletFeedback";
+import { User } from "../models/User";
 
 const AppDataSource = new DataSource({
   type: "mssql",
@@ -7,7 +9,7 @@ const AppDataSource = new DataSource({
   username: "sa",
   password: "sql123ch%",
   database: "toiletservice",
-  entities: [],
+  entities: [User, ToiletFeedback],
   synchronize: true,
   logging: false,
   options: {
