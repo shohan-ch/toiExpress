@@ -17,7 +17,9 @@ import { Request } from "express";
 export class UserController {
   @Post()
   store(@Body() user: any) {
+    // return user;
     let response = UserRepository.store(user);
+    return response;
   }
 
   @Get()

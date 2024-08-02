@@ -1,8 +1,15 @@
 import { Request } from "express";
+import AppDataSource from "../../config/Database";
+import { User } from "../../models/User";
 
 class UserRepository {
-  store(user: any) {
-    return "New User";
+  private userModel;
+  constructor() {
+    this.userModel = AppDataSource.getRepository(User);
+  }
+  async store(user: any) {
+    let newUser = this.userModel.save(user);
+    return "User created";
   }
   getUsers() {
     return "All User form repository";
